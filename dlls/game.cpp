@@ -17,6 +17,7 @@
 #include "util.h"
 #include "game.h"
 #include "vcs_info.h"
+#include "bot.h"
 
 static cvar_t build_commit = { "sv_game_build_commit", g_VCSInfo_Commit };
 static cvar_t build_branch = { "sv_game_build_branch", g_VCSInfo_Branch };
@@ -511,6 +512,7 @@ void GameDLLInit( void )
 	CVAR_REGISTER( &multibyte_only );
 
 	CVAR_REGISTER( &mp_chattime );
+	BotRegisterCvars();
 	CVAR_REGISTER( &sv_busters );
 
 
