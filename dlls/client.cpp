@@ -39,6 +39,7 @@
 #include "usercmd.h"
 #include "netadr.h"
 #include "pm_shared.h"
+#include "bot.h"
 
 extern DLL_GLOBAL ULONG		g_ulModelIndexPlayer;
 extern DLL_GLOBAL BOOL		g_fGameOver;
@@ -128,6 +129,7 @@ void ClientDisconnect( edict_t *pEntity )
 	UTIL_SetOrigin( &pEntity->v, pEntity->v.origin );
 
 	g_pGameRules->ClientDisconnected( pEntity );
+	BotClientDisconnect( pEntity );
 }
 
 // called by ClientKill and DeadThink
@@ -605,6 +607,10 @@ void ClientCommand( edict_t *pEntity )
 		if( pPlayer->IsObserver() )
 			pPlayer->Observer_FindNextPlayer( atoi( CMD_ARGV( 1 ) ) ? true : false );
 	}
+	else if( BotClientCommand( pEntity, pcmd ) )
+	{
+		// Bot command handled.
+	}
 	else if( g_pGameRules->ClientCommand( GetClassPtr( (CBasePlayer *)pev ), pcmd ) )
 	{
 		// MenuSelect returns true only if the command is properly handled,  so don't print a warning
@@ -817,6 +823,8 @@ void StartFrame( void )
 
 	if( g_fGameOver )
 		return;
+
+	BotStartFrame();
 
 	gpGlobals->teamplay = teamplay.value;
 	g_ulFrameCount++;

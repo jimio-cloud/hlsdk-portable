@@ -55,6 +55,7 @@ set (SVDLL_SOURCES
 	barney.cpp
 	bigmomma.cpp
 	bloater.cpp
+	bot.cpp
 	bmodels.cpp
 	bullsquid.cpp
 	buttons.cpp
